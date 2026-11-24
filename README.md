@@ -30,4 +30,4 @@ python -m pip install netmiko
 ## Next Milestone
 
 After the single-device check works, run it against a small lab
-inventory and summarize which devices respo
+inventory and summarize which devices response
