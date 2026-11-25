@@ -1,5 +1,4 @@
 from netmiko import ConnectHandler 
-import os
 from getpass import getpass # this will hide the password as you type it
 # 1. Enter the lab device's IP address, username, and device type.
 
