@@ -1,9 +1,16 @@
-# Netmiko Network Automation Project
+# Netmiko Configuration Backup
+
 By Armond Jones
+
 ## Project Goal
-I am building a python script that uses netmiko to connect to a lab router or switch over SSH and check which interfaces are up or down
+
+I'm building a Python tool that connects to Cisco IOS lab devices over SSH, saves their running configurations, and uses Git to flag changes between backups. Git history will show which lines were added or removed.
+
+## Current Progress
+
+I installed Netmiko and tested the prompts for the device IP address, username, and password. The next step is to collect a sample running configuration through a mock connection.
+
 ## Setup
-Create a Python virtual environment and install Netmiko:
 
 ```bash
 python3 -m venv .venv
@@ -11,23 +18,23 @@ source .venv/bin/activate
 python -m pip install netmiko
 ```
 
-## How It Will Work
+## Planned Workflow
 
-1. Enter the lab device's IP address, username, and device type.
-2. Enter the SSH password when the script prompts for it.
-3. Connect to the device and run a read-only command. On Cisco IOS,
-   the first command will be `show ip interface brief`.
-4. Print the interface status and close the SSH session.
+1. `main.py` collects the device details and opens an SSH session.
+2. `config_backup.py` runs `show running-config` and returns the output.
+3. Save the output to a separate `.cfg` file for each device.
+4. Commit the first backup to a private local Git repository as the baseline.
+5. Compare later backups with the last committed version. Report whether each backup is new, changed, unchanged, or failed. Commit new or changed backups.
 
 ## Test Plan
 
-- [ ] Connect to one lab device over SSH.
-- [ ] Compare the script output with the command run manually.
-- [ ] Check that an unreachable host and incorrect credentials produce
-      distinct error messages.
-- [ ] Add a sample output with private device details removed.
+- [ ] Use a mock connection to return a sample running configuration.
+- [ ] Save and commit the first sample as the baseline.
+- [ ] Run with identical output and verify that no new commit is created.
+- [ ] Change one line and verify that Git shows the difference.
+- [ ] Simulate a failed connection and verify that the previous backup is preserved.
+- [ ] Test against one Cisco IOS lab device before expanding to multiple devices.
 
-## Next Milestone
+## Config Storage
 
-After the single-device check works, run it against a small lab
-inventory and summarize which devices response
+This public repository uses fictional sample configurations. Real backups stay in a separate local Git repository because running configurations can contain secrets and internal network details.
