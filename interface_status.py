@@ -1,5 +1,4 @@
 import main
-import os
 from netmiko import ConnectHandler 
 
 try:
